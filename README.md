@@ -16,7 +16,7 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `server`: a [Nest.js](https://nestjs.org/) app
+- `api`: a [Nest.js](https://nestjs.org/) app
 - `web`: another [Next.js](https://nextjs.org/) app
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
@@ -78,3 +78,17 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+
+## Swagger
+
+There is a swagger for api module where you can find all request you can send to api service.
+
+To access swagger just run local server with:
+
+```
+pnpm dev
+```
+
+And then just go to
+
+[Localhost Swagger](http://localhost:3001/api)
