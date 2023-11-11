@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Card } from "ui";
 import styles from "./page.module.css";
+import { useEffect } from "react";
 
 function Gradient({
   conic,
@@ -49,7 +49,22 @@ const LINKS = [
   },
 ];
 
-export default function Page(): JSX.Element {
+async function hello(): Promise<string> {
+  const res = await fetch("http://localhost:3001");
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.text();
+}
+
+export default async function Page(): Promise<JSX.Element> {
+  const hi = await hello();
+  console.log(hi);
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -124,13 +139,7 @@ export default function Page(): JSX.Element {
         </div>
       </div>
 
-      <div className={styles.grid}>
-        {LINKS.map(({ title, href, description }) => (
-          <Card className={styles.card} href={href} key={title} title={title}>
-            {description}
-          </Card>
-        ))}
-      </div>
+      <div className={styles.grid}>{hi}</div>
     </main>
   );
 }

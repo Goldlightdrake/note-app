@@ -1,6 +1,6 @@
-# Turborepo starter
+# Note app
 
-This is an official starter Turborepo.
+This is a basic app for notes management. Using this app u can view, add, remove and edit your notes.
 
 ## Using this example
 
@@ -16,9 +16,8 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
+- `server`: a [Nest.js](https://nestjs.org/) app
 - `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
