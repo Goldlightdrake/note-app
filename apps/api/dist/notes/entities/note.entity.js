@@ -9,26 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
-const common_1 = require("@nestjs/common");
-const app_service_1 = require("./app.service");
-let AppController = class AppController {
-    constructor(appService) {
-        this.appService = appService;
+exports.Note = void 0;
+const swagger_1 = require("@nestjs/swagger");
+class Note {
+    constructor(id, title, content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
     }
-    getHello() {
-        return this.appService.getHello();
-    }
-};
-exports.AppController = AppController;
+}
+exports.Note = Note;
 __decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "getHello", null);
-exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService])
-], AppController);
-//# sourceMappingURL=app.controller.js.map
+    (0, swagger_1.ApiProperty)({ description: 'The unique identifier of the note.' }),
+    __metadata("design:type", String)
+], Note.prototype, "id", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'The title of the note.' }),
+    __metadata("design:type", String)
+], Note.prototype, "title", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'The content of the note.' }),
+    __metadata("design:type", String)
+], Note.prototype, "content", void 0);
+//# sourceMappingURL=note.entity.js.map
