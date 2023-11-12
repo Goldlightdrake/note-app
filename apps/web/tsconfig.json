@@ -1,7 +1,4 @@
 {
-  "extends": "tsconfig/nestjs.json",
-  "include": [
-    "src/**/*",
-    ".next/types/**/*.ts"
-  ]
+  "extends": "tsconfig/nextjs.json",
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }
