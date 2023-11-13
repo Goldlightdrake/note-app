@@ -7,6 +7,8 @@ const MOCK_NOTE: Note = {
   id: '1',
   title: 'Test Note',
   content: 'This is a test note',
+  createdAt: new Date(),
+  updatedAt: new Date(),
 };
 
 describe('NotesController', () => {
@@ -61,7 +63,13 @@ describe('NotesController', () => {
       const id = '1';
       const title = 'Updated Note';
       const content = 'This is an updated note';
-      const updatedNote = { id, title, content };
+      const updatedNote = {
+        ...MOCK_NOTE,
+        id,
+        title,
+        content,
+        updatedAt: new Date(),
+      };
       jest.spyOn(service, 'update').mockReturnValueOnce(updatedNote);
 
       const result = await controller.update(id, title, content);

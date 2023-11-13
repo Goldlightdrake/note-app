@@ -37,7 +37,7 @@ describe('NotesController (e2e)', () => {
     return request(app.getHttpServer()).get(`/notes/${noteId}`).expect(200);
   });
 
-  it('/notes/:id (PATCH)', async () => {
+  it('/notes/:id (PUT)', async () => {
     const response = await request(app.getHttpServer())
       .post('/notes')
       .send({ title: 'Test Note', content: 'This is a test note.' })
@@ -45,7 +45,7 @@ describe('NotesController (e2e)', () => {
 
     const noteId = response.body.id;
     return request(app.getHttpServer())
-      .patch(`/notes/${noteId}`)
+      .put(`/notes/${noteId}`)
       .send({
         title: 'Updated Test Note',
         content: 'This is an updated test note.',

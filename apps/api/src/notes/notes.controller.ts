@@ -3,11 +3,11 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpCode,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -51,7 +51,7 @@ export class NotesController {
     return this.notesService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Update a note by ID' })
   @ApiResponse({

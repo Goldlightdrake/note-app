@@ -22,7 +22,7 @@ export class NotesService {
 
   update(id: string, title: string, content: string) {
     const [note, index] = this.findNote(id);
-    const updatedNote = { ...note, title, content };
+    const updatedNote = { ...note, title, content, updatedAt: new Date() };
     this.notes[index] = updatedNote;
     return updatedNote;
   }
