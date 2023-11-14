@@ -1,5 +1,5 @@
 import { NotesList } from "@/components/notes-list";
-import { getNotes } from "@/lib/service";
+import { getNotes } from "@/lib/note-service";
 import React from "react";
 
 export default async function Home() {

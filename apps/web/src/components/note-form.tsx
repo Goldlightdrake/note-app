@@ -1,6 +1,6 @@
 "use client";
 
-import { createNote, deleteNote, updateNote } from '@/lib/service';
+import { createNote, deleteNote, updateNote } from '@/lib/note-service';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react'
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ import { Textarea } from './ui/textarea';
 import { DialogFooter } from './ui/dialog';
 import { Button } from './ui/button';
 import { Note } from '@/types/Note';
+import { useToast } from '@/lib/use-toast';
 
 const noteScheme = z.object({
   title: z
@@ -37,19 +38,25 @@ interface NoteFormProps {
   note?: Note;
 }
 
+type NoteFormValues = z.infer<typeof noteScheme>;
+
 export const NoteForm = ({ note, closeDialog, action }: NoteFormProps) => {
-  const form = useForm<z.infer<typeof noteScheme>>({
+  const form = useForm<NoteFormValues>({
     resolver: zodResolver(noteScheme),
     defaultValues: {
       title: note?.title || "",
       content: note?.content || "",
     }
   });
+  const {
+    isDirty
+  } = form.formState;
   const [processing, setProcessing] = React.useState(false);
+  const { toast, } = useToast();
+  const isNewNote = action === "create";
 
-  const handleFormSubmit = form.handleSubmit(async (values) => {
-    setProcessing(true);
-    if (action === "create") {
+  const actionFunction = async (values: NoteFormValues) => {
+    if (isNewNote) {
       await createNote({
         title: values.title,
         content: values.content,
@@ -61,22 +68,41 @@ export const NoteForm = ({ note, closeDialog, action }: NoteFormProps) => {
         content: values.content,
       });
     }
+  }
+
+  const handleFormSubmit = form.handleSubmit(async (values) => {
+    setProcessing(true);
+    try {
+      await actionFunction(values);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Oh no! Something went wrong.",
+        description: error.message,
+      })
+      setProcessing(false);
+      return;
+    }
+    toast({
+      title: `Note ${values.title}`,
+      description: `Your note has been ${isNewNote ? "added" : "updated"} successfully.`,
+    })
     form.reset();
     closeDialog()
   });
-  
+
   const handleDelete = async () => {
     if (note) {
       await deleteNote(note.id);
       closeDialog()
     }
   }
-  
+
   const renderDialogFooter = () => {
-    if(action === "create") {
+    if (action === "create") {
       return (
         <DialogFooter>
-          <Button disabled={processing} type="submit">Create note</Button>
+          <Button disabled={processing || !isDirty} type="submit">Create note</Button>
         </DialogFooter>
       )
     } else {
@@ -85,7 +111,7 @@ export const NoteForm = ({ note, closeDialog, action }: NoteFormProps) => {
           <Button onClick={handleDelete} variant="destructive">
             Delete
           </Button>
-          <Button disabled={processing} type="submit">Update note</Button>
+          <Button disabled={processing || !isDirty} type="submit">Update note</Button>
         </DialogFooter>
       )
     }
