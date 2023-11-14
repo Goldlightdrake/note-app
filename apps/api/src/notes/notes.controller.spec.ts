@@ -4,7 +4,7 @@ import { NotesService } from './notes.service';
 import { Note } from './entities/note.entity';
 
 const MOCK_NOTE: Note = {
-  id: '1',
+  id: 1,
   title: 'Test Note',
   content: 'This is a test note',
   createdAt: new Date(),
@@ -30,7 +30,7 @@ describe('NotesController', () => {
       const { title, content } = MOCK_NOTE;
       jest.spyOn(service, 'create').mockReturnValueOnce(MOCK_NOTE);
 
-      const result = controller.create(title, content);
+      const result = controller.create({ title, content });
 
       expect(result).toBe(MOCK_NOTE);
     });
@@ -41,7 +41,7 @@ describe('NotesController', () => {
       const notes: Note[] = [MOCK_NOTE, MOCK_NOTE, MOCK_NOTE];
       jest.spyOn(service, 'findAll').mockReturnValueOnce(notes);
 
-      const result = await controller.findAll();
+      const result = controller.findAll();
 
       expect(result).toBe(notes);
     });
@@ -52,7 +52,7 @@ describe('NotesController', () => {
       const { id } = MOCK_NOTE;
       jest.spyOn(service, 'findOne').mockReturnValueOnce(MOCK_NOTE);
 
-      const result = await controller.findOne(id);
+      const result = controller.findOne(id);
 
       expect(result).toBe(MOCK_NOTE);
     });
@@ -60,7 +60,7 @@ describe('NotesController', () => {
 
   describe('update', () => {
     it('should update a note by id', async () => {
-      const id = '1';
+      const id = 1;
       const title = 'Updated Note';
       const content = 'This is an updated note';
       const updatedNote = {
@@ -72,7 +72,7 @@ describe('NotesController', () => {
       };
       jest.spyOn(service, 'update').mockReturnValueOnce(updatedNote);
 
-      const result = await controller.update(id, title, content);
+      const result = controller.update(id, { title, content });
 
       expect(result).toBe(updatedNote);
     });
@@ -80,10 +80,10 @@ describe('NotesController', () => {
 
   describe('remove', () => {
     it('should remove a note by id', async () => {
-      const id = '1';
+      const id = 1;
       jest.spyOn(service, 'remove').mockReturnValueOnce(MOCK_NOTE);
 
-      const result = await controller.remove(id);
+      const result = controller.remove(id);
 
       expect(result).toBe(MOCK_NOTE);
     });

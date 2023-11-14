@@ -11,7 +11,14 @@ import {
 } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { NoteRequestBody } from './entities/note.entity';
 
+/**
+ * Controller for managing notes.
+ * @remarks
+ * This controller provides endpoints for creating, retrieving, updating and deleting notes.
+ * @packageDocumentation
+ */
 @ApiTags('notes')
 @Controller('notes')
 export class NotesController {
@@ -24,8 +31,8 @@ export class NotesController {
     status: HttpStatus.CREATED,
     description: 'The note has been successfully created.',
   })
-  create(@Body('title') title: string, @Body('content') content: string) {
-    return this.notesService.create(title, content);
+  create(@Body() noteBody: NoteRequestBody) {
+    return this.notesService.create(noteBody);
   }
 
   @Get()
@@ -47,7 +54,7 @@ export class NotesController {
     description: 'Retrieve a note successfully.',
   })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Note not found.' })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.notesService.findOne(id);
   }
 
@@ -59,12 +66,8 @@ export class NotesController {
     description: 'Update a note successfully.',
   })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Note not found.' })
-  update(
-    @Param('id') id: string,
-    @Body('title') title: string,
-    @Body('content') content: string,
-  ) {
-    return this.notesService.update(id, title, content);
+  update(@Param('id') id: number, @Body() noteBody: NoteRequestBody) {
+    return this.notesService.update(id, noteBody);
   }
 
   @Delete(':id')
@@ -75,7 +78,7 @@ export class NotesController {
     description: 'Delete a note successfully.',
   })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Note not found.' })
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.notesService.remove(id);
   }
 }
