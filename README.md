@@ -81,9 +81,9 @@ Learn more about the power of Turborepo:
 
 ## Swagger
 
-There is a swagger for api module where you can find all request you can send to api service.
+There is a Swagger documentation for the API module where you can find all the requests you can send to the API service.
 
-To access swagger just run local server with:
+To access Swagger, just run the local server with:
 
 ```
 pnpm dev
@@ -92,3 +92,27 @@ pnpm dev
 And then just go to
 
 [Localhost Swagger](http://localhost:3001/api)
+
+
+## Tests
+
+The API has unit tests and e2e tests. To run them, use the following commands:
+
+```bash
+# unit tests
+$ pnpm run test
+
+# e2e tests
+$ pnpm run test:e2e
+
+# test coverage
+$ pnpm run test:cov
+```
+
+## Architecture and choices throughout the project
+
+In my Nest.js project, I seamlessly implemented the basic configuration and CRUD generator provided in the official documentation. Leveraging a combination of Server-Side Rendering (SSR) and Client-Side Rendering (CSR), I ensured optimal performance for the web application. The UI was crafted using the delightful shadnc/ui library along with the flexibility of Tailwind CSS, resulting in a highly customizable and visually appealing user interface.
+
+To maintain a consistent and organized codebase, I adhered to the naming conventions outlined in the Next.js documentation. Additionally, I adopted the suggested component architecture from Shadcn's documentation, enhancing the project's maintainability and scalability.
+
+Throughout the development process, the synergy between Nest.js, shadnc/ui, and Tailwind CSS proved to be a winning combination, eliminating potential roadblocks and contributing to the project's simplicity. This strategic alignment facilitated a smooth and efficient workflow, allowing for a seamless integration of backend and frontend components.
