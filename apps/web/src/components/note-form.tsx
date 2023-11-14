@@ -72,6 +72,7 @@ export const NoteForm = ({ note, closeDialog, action }: NoteFormProps) => {
 
   const handleFormSubmit = form.handleSubmit(async (values) => {
     setProcessing(true);
+    console.log('12313213')
     try {
       await actionFunction(values);
     } catch (error) {
@@ -92,10 +93,25 @@ export const NoteForm = ({ note, closeDialog, action }: NoteFormProps) => {
   });
 
   const handleDelete = async () => {
-    if (note) {
-      await deleteNote(note.id);
-      closeDialog()
+    console.log('12313213')
+    if(!note) {
+      return;
     }
+    try{
+      await deleteNote(note.id);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Oh no! Something went wrong with deleted.",
+        description: error.message,
+      })
+      return;
+    }
+    toast({
+      title: `Note ${note.title}`,
+      description: `Your note has been deleted successfully.`,
+    })
+    closeDialog()
   }
 
   const renderDialogFooter = () => {
@@ -108,7 +124,7 @@ export const NoteForm = ({ note, closeDialog, action }: NoteFormProps) => {
     } else {
       return (
         <DialogFooter className='gap-2'>
-          <Button onClick={handleDelete} variant="destructive">
+          <Button onClick={handleDelete} variant="destructive" type="button">
             Delete
           </Button>
           <Button disabled={processing || !isDirty} type="submit">Update note</Button>
